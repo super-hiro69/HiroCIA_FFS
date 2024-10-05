@@ -1,0 +1,26 @@
+name: PyCI.FS
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 9 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install & Run
+      run: |
+        pip install -r requirements.txt
+        python3 main.py
+      env:
+        TGBotToken: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TGAdminId: ${{ secrets.TELEGRAM_ADMIN_ID }}
+        GithubToken: ${{ secrets.VERY_IMPORTANT_TOKEN }}
+        GithubRepo: ${{ secrets.VERY_IMPORTANT_NAME }}
